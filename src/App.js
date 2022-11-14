@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useRef, useState } from 'react';
+import { Routes, Route } from "react-router-dom";
+import Header from "./Components/Header";
+import Home from "./Components/Home";
+import Service from "./Components/Service";
+import Contact from "./Components/Contact";
 
 function App() {
+  const myRef = useRef(null);
+  const [theme, setTheme] = useState("Light");
+  function myFunction(){
+    myRef.current.classList.toggle("mystyle");
+    console.log("hello");
+    if(theme === "Dark"){
+      setTheme("Light");
+    }
+    else{
+      setTheme("Dark");
+    }
+    
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div ref = {myRef} className="App">
+      <Header func={myFunction} theme={theme} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/service" element={<Service />} />
+      </Routes>
     </div>
   );
 }
